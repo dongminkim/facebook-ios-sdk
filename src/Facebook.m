@@ -50,13 +50,14 @@ static void *finishedContext = @"finishedContext";
 
 @end
 
-#pragma - mark Private class used by the block methods
+#pragma mark - Private class used by the block methods
 @interface FBRequestHandler : NSObject <FBRequestDelegate>
 {
-@public
   FBCallbackBlock doneCallback;
   FBCallbackBlock errorCallback;
 }
+@property(nonatomic, strong) FBCallbackBlock doneCallback;
+@property(nonatomic, strong) FBCallbackBlock errorCallback;
 @end
 
 
@@ -862,33 +863,33 @@ static void *finishedContext = @"finishedContext";
                              error:(FBCallbackBlock)error
 {
   return [self requestWithGraphPath:graphPath
-                          andParams:[NSMutableDictionary dictionary]
-                      andHttpMethod:@"GET"
+                             params:[NSMutableDictionary dictionary]
+                         httpMethod:@"GET"
                            callback:callback
                               error:error];
 }
 
 - (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                         andParams:(NSMutableDictionary *)params
+                            params:(NSMutableDictionary *)params
                           callback:(FBCallbackBlock)callback
                              error:(FBCallbackBlock)error
 {
   return [self requestWithGraphPath:graphPath
-                          andParams:params
-                      andHttpMethod:@"GET"
+                             params:params
+                         httpMethod:@"GET"
                            callback:callback
                               error:error];
 }
 
 - (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                         andParams:(NSMutableDictionary *)params
-                     andHttpMethod:(NSString *)httpMethod
+                            params:(NSMutableDictionary *)params
+                        httpMethod:(NSString *)httpMethod
                           callback:(FBCallbackBlock)done
                              error:(FBCallbackBlock)error
 {
   FBRequestHandler* requestHandler = [[FBRequestHandler alloc] init];
-  requestHandler->doneCallback = [done copy];
-  requestHandler->errorCallback = [error copy];
+  requestHandler.doneCallback = [done copy];
+  requestHandler.errorCallback = [error copy];
   
   return [self requestWithGraphPath:graphPath
                            andParams:params
@@ -898,7 +899,7 @@ static void *finishedContext = @"finishedContext";
 
 @end
 
-#pragma - mark Implementation of the private class used by the block methods
+#pragma mark - Implementation of the private class used by the block methods
 
 @implementation FBRequestHandler
 
@@ -910,10 +911,8 @@ static void *finishedContext = @"finishedContext";
     }
   }
   @finally {
-    [doneCallback release];
-    [errorCallback release];
-    doneCallback = nil;
-    errorCallback = nil;
+    self.doneCallback = nil;
+    self.errorCallback = nil;
   }
 }
 
@@ -925,10 +924,8 @@ static void *finishedContext = @"finishedContext";
     }
   }
   @finally {
-    [doneCallback release];
-    [errorCallback release];
-    doneCallback = nil;
-    errorCallback = nil;
+    self.doneCallback = nil;
+    self.errorCallback = nil;
   }
 }
 

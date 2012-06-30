@@ -97,13 +97,13 @@ typedef void (^FBCallbackBlock)(id response);
                              error:(FBCallbackBlock)error;
 
 - (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                         andParams:(NSMutableDictionary *)params
+                            params:(NSMutableDictionary *)params
                           callback:(FBCallbackBlock)callback
                              error:(FBCallbackBlock)error;
 
 - (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                         andParams:(NSMutableDictionary *)params
-                     andHttpMethod:(NSString *)httpMethod
+                            params:(NSMutableDictionary *)params
+                        httpMethod:(NSString *)httpMethod
                           callback:(FBCallbackBlock)callback
                              error:(FBCallbackBlock)error;
 

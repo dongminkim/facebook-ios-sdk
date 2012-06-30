@@ -268,8 +268,9 @@ static const NSTimeInterval kTimeoutInterval = 180.0;
     
     NSError* error = nil;
     id result;
-    NSRange range = [_contentType rangeOfString:@"text/javascript"];
-    if (range.location != NSNotFound) {
+    NSRange range = [_contentType rangeOfString:@"application/json"];
+    NSRange range2 = [_contentType rangeOfString:@"text/javascript"];
+    if (range.location != NSNotFound || range2.location != NSNotFound) {
         result = [self parseJsonResponse:data error:&error];
     } else {
         result = data;
